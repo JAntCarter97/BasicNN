@@ -5,28 +5,68 @@
 #include "Net.h"
 #include <iostream>
 #include <vector>
+#include <cassert>
+#include <string>
+#include <fstream>
+#include <sstream>
 
 using std::vector;
 using std::cout;
 using std::endl;
+using std::string;
+
+//Function declarations
+void showVectorVals(string label, vector<double> &v);
 
 int main()
 {
+	TrainingData trainData("trainingData.txt");
+
 	vector<unsigned> topology;
-	//Creates a 3 -> 2 -> 1 Net with 3 being the inputs, 
-	//2 being the hidden layer, and 1 the output
-	topology.push_back(3);
-	topology.push_back(2);
-	topology.push_back(1);
+	trainData.getTopology(topology);
 	Net myNet(topology);
 
-	vector<double> inputVals;
-	myNet.feedForward(inputVals);
+	vector<double> inputVals, targetVals, resultVals;
+	int trainingPass = 0;
 
-	vector<double> targetVals;
-	myNet.backProp(targetVals);
+	while (!trainData.isEof())
+	{
+		trainingPass++;
+		cout << endl << "Pass " << trainingPass;
 
-	vector<double> resultVals;
-	myNet.getResults(resultVals);
+		//Get new input data and feed it forward.
+		if (trainData.getNextInputs(inputVals) != topology[0])
+		{
+			break;
+		}
+		showVectorVals(": Inputs:", inputVals);
+
+		myNet.feedForward(inputVals);
+
+		myNet.getResults(resultVals);
+		showVectorVals("Outputs: ", resultVals);
+
+		trainData.GetTargetOutputs(targetVals);
+		showVectorVals("Targets: ", targetVals);
+		assert(targetVals.size() == topology.back());
+
+		myNet.backProp(targetVals);
+
+		//Report how well the training is working
+		cout << "Net recent average error: " << myNet.getRecentAverageError() << endl;
+	}
+
+	cout << endl << "Done" << endl;
+}
+
+void showVectorVals(string label, vector<double> &v)
+{
+	cout << label << " ";
+	for (unsigned i = 0; i < v.size(); i++)
+	{
+		cout << v[i] << " ";
+	}
+
+	cout << endl;
 }
 

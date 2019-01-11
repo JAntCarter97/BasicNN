@@ -26,6 +26,9 @@ Net::Net(const vector<unsigned> &topology)
 			m_layers.back().push_back(Neuron(numOutputs, neuronNum));
 			cout << "Made a Neuron" << endl;
 		}
+
+		//Force the bias node's output value to 1.0
+		m_layers.back().back().setOutputVal(1.0);
 	}
 }
 
