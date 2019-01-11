@@ -15,7 +15,7 @@ Net::Net(const vector<unsigned> &topology)
 	//Outer Loop creates a new layer
 	for (unsigned layerNum = 0; layerNum < numLayers; layerNum++)
 	{
-		m_layers.push_back(Layer());
+		m_layers.push_back(vector<Neuron>());
 
 		unsigned numOutputs = layerNum == topology.size() - 1 ? 0 : topology[layerNum - 1];
 
@@ -53,7 +53,7 @@ void Net::feedForward(const vector<double> &inputVals)
 	//Forward Prop
 	for (unsigned layerNum = 1; layerNum < m_layers.size(); layerNum++)
 	{
-		Layer &prevLayer = m_layers[layerNum - 1];
+		vector<Neuron> &prevLayer = m_layers[layerNum - 1];
 		for (unsigned n = 0; n < m_layers[layerNum].size() - 1; n++)
 		{
 			m_layers[layerNum][n].feedForward(prevLayer);
@@ -64,7 +64,7 @@ void Net::feedForward(const vector<double> &inputVals)
 void Net::backProp(const vector<double> &targetVals)
 {
 	//Calc overall net error
-	Layer &outputLayer = m_layers.back();
+	vector<Neuron> &outputLayer = m_layers.back();
 	m_error = 0.0;
 
 	for (unsigned n = 0; n < outputLayer.size() - 1; n++)
@@ -88,8 +88,8 @@ void Net::backProp(const vector<double> &targetVals)
 	//Calc gradients on hidden layers
 	for (unsigned layerNum = m_layers.size() - 2; layerNum > 0; layerNum--)
 	{
-		Layer &hiddenLayer = m_layers[layerNum];
-		Layer &nextLayer = m_layers[layerNum + 1];
+		vector<Neuron> &hiddenLayer = m_layers[layerNum];
+		vector<Neuron> &nextLayer = m_layers[layerNum + 1];
 
 		for (unsigned n = 0; n < hiddenLayer.size(); n++)
 		{
@@ -101,8 +101,8 @@ void Net::backProp(const vector<double> &targetVals)
 	// update connection weights.
 	for (unsigned layerNum = m_layers.size() - 1; layerNum > 0; layerNum--)
 	{
-		Layer &layer = m_layers[layerNum];
-		Layer &prevLayer = m_layers[layerNum - 1];
+		vector<Neuron> &layer = m_layers[layerNum];
+		vector<Neuron> &prevLayer = m_layers[layerNum - 1];
 
 		for (unsigned n = 0; n < layer.size() - 1; n++)
 		{

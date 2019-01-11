@@ -4,8 +4,6 @@
 #include <vector>
 using std::vector;
 
-typedef vector<Neuron> Layer;
-
 class Net
 {
 public:
@@ -18,7 +16,7 @@ public:
 	double getRecentAverageError(void) const { return m_recentAverageError; }
 
 private:
-	vector<Layer> m_layers; //m_layers[layerNum][neuronNum]
+	vector<vector<Neuron>> m_layers; //m_layers[layerNum][neuronNum]
 	double m_error;
 	double m_recentAverageError;
 	double m_recentAverageSmoothingFactor;

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "Net.h"
+#include "TrainingData.h"
 #include <iostream>
 #include <vector>
 #include <cassert>
@@ -46,7 +47,7 @@ int main()
 		myNet.getResults(resultVals);
 		showVectorVals("Outputs: ", resultVals);
 
-		trainData.GetTargetOutputs(targetVals);
+		trainData.getTargetOutputs(targetVals);
 		showVectorVals("Targets: ", targetVals);
 		assert(targetVals.size() == topology.back());
 

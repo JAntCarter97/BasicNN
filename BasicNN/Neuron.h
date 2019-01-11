@@ -5,8 +5,6 @@
 
 using std::vector;
 
-typedef vector<Neuron> Layer;
-
 struct Connection
 {
 	double weight;
@@ -19,10 +17,10 @@ public:
 	Neuron(unsigned numOutputs, unsigned myIndex);
 	~Neuron();
 
-	void feedForward(const Layer &prevLayer);
+	void feedForward(const vector<Neuron> &prevLayer);
 	void calcOutputGradients(double targetVal);
-	void calcHiddenGradients(const Layer &nextLayer);
-	void updateInputWeights(Layer &prevLayer);
+	void calcHiddenGradients(const vector<Neuron> &nextLayer);
+	void updateInputWeights(vector<Neuron> &prevLayer);
 	
 	//Getters Setters
 	void setOutputVal(double val) { m_outputVal = val; }
@@ -38,6 +36,6 @@ private:
 	static double randomWeight(void) { return rand() / double(RAND_MAX); }
 	static double transferFunction(double x);
 	static double transferFunctionDerivative(double x);
-	double sumDOW(const Layer &nextLayer);
+	double sumDOW(const vector<Neuron> &nextLayer);
 };
 

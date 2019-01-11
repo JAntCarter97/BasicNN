@@ -19,7 +19,7 @@ Neuron::~Neuron()
 {
 }
 
-void Neuron::feedForward(const Layer &prevLayer)
+void Neuron::feedForward(const vector<Neuron> &prevLayer)
 {
 	double sum = 0.0;
 
@@ -28,7 +28,7 @@ void Neuron::feedForward(const Layer &prevLayer)
 
 	for (unsigned n = 0; n < prevLayer.size(); n++)
 	{
-		sum += prevLayer[n].getOutputVal() * prevLayer[n].m_ouputWeights[m_myIndex].weight;
+		sum += prevLayer[n].getOutputVal() * prevLayer[n].m_outputWeights[m_myIndex].weight;
 	}
 
 	m_outputVal = Neuron::transferFunction(sum);
@@ -52,13 +52,13 @@ void Neuron::calcOutputGradients(double targetVal)
 	m_gradient = delta * Neuron::transferFunctionDerivative(m_outputVal);
 }
 
-void Neuron::calcHiddenGradients(const Layer &nextLayer)
+void Neuron::calcHiddenGradients(const vector<Neuron> &nextLayer)
 {
 	double dow = sumDOW(nextLayer);
 	m_gradient = dow * Neuron::transferFunctionDerivative(m_outputVal);
 }
 
-double Neuron::sumDOW(const Layer &nextLayer)
+double Neuron::sumDOW(const vector<Neuron> &nextLayer)
 {
 	double sum = 0.0;
 	
@@ -73,7 +73,7 @@ double Neuron::sumDOW(const Layer &nextLayer)
 double Neuron::eta = 0.15; //Overall net learning rate
 double Neuron::alpha = 0.5; // Momentum, multiplier of last deltaWeight
 
-void Neuron::updateInputWeights(Layer &prevLayer)
+void Neuron::updateInputWeights(vector<Neuron> &prevLayer)
 {
 	// THe weights to the updated are in the connection container 
 	// in the neurons in the preceding layer
