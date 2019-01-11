@@ -18,5 +18,8 @@ public:
 
 private:
 	vector<Layer> m_layers; //m_layers[layerNum][neuronNum]
+	double m_error;
+	double m_recentAverageError;
+	double m_recentAverageSmoothingFactor;
 };
 
