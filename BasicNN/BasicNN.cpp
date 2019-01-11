@@ -2,20 +2,31 @@
 //
 
 #include "pch.h"
+#include "Net.h"
 #include <iostream>
+#include <vector>
+
+using std::vector;
+using std::cout;
+using std::endl;
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	vector<unsigned> topology;
+	//Creates a 3 -> 2 -> 1 Net with 3 being the inputs, 
+	//2 being the hidden layer, and 1 the output
+	topology.push_back(3);
+	topology.push_back(2);
+	topology.push_back(1);
+	Net myNet(topology);
+
+	vector<double> inputVals;
+	myNet.feedForward(inputVals);
+
+	vector<double> targetVals;
+	myNet.backProp(targetVals);
+
+	vector<double> resultVals;
+	myNet.getResults(resultVals);
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
