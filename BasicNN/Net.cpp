@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "Net.h"
 
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::vector;
+
 
 Net::Net(const vector<unsigned> &topology)
 {
@@ -15,7 +20,8 @@ Net::Net(const vector<unsigned> &topology)
 		//Includes bias
 		for (unsigned neuronNum = 0; neuronNum <= topology[layerNum]; neuronNum++)
 		{
-			m_layers.back().push_back(Neruon());
+			m_layers.back().push_back(Neuron());
+			cout << "Made a Neuron" << endl;
 		}
 	}
 }
