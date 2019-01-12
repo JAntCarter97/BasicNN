@@ -17,7 +17,7 @@ Net::Net(const vector<unsigned> &topology)
 	{
 		m_layers.push_back(vector<Neuron>());
 
-		unsigned numOutputs = layerNum == topology.size() - 1 ? 0 : topology[layerNum - 1];
+		unsigned numOutputs = layerNum == topology.size() - 1 ? 0 : topology[layerNum + 1];
 
 		//Inner loop goes through each layer and adds neurons to the layer
 		//Includes bias
@@ -70,6 +70,7 @@ void Net::backProp(const vector<double> &targetVals)
 	for (unsigned n = 0; n < outputLayer.size() - 1; n++)
 	{
 		double delta = targetVals[n] - outputLayer[n].getOutputVal();
+		m_error += delta * delta;
 	}
 
 	m_error /= outputLayer.size() - 1; // Get average error squared

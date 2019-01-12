@@ -40,7 +40,7 @@ int main()
 		{
 			break;
 		}
-		showVectorVals(": Inputs:", inputVals);
+		showVectorVals(": Inputs: ", inputVals);
 
 		myNet.feedForward(inputVals);
 
